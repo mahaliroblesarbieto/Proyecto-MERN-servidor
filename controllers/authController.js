@@ -14,26 +14,36 @@ exports.autenticarUsuario = async (req, res) => {
             errores: errores.array()
         })
     }
+    console.log(req.body);
 
     //extraer email y password
     const {
         email,
         password
-    } = req.body
+    } = req.body;
 
     try {
+        console.log('entra a try');
+
         //Revisar que sea un usuario registrado
         let usuario = await Usuario.findOne({
             email
         });
+        console.log(password);
+        console.log(usuario.password);
+
+
         if (!usuario) {
             return res.status(400).json({
                 msg: 'El usuario no existe'
             });
         }
+        console.log('llega antes de passcorrecto');
 
         //Revisar el password
         const passCorrecto = await bcryptjs.compare(password, usuario.password);
+        console.log('llega ates de passcorrecto');
+
         console.log(passCorrecto);
 
 

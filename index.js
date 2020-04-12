@@ -6,12 +6,22 @@ const app = express();
 //Conectar a la base de datos
 conectarDB();
 
+// habilitar cors
+// app.use(cors());
+
+// Habilitar express.json
+app.use( express.json({ extended: true }));
+
 // puerto de la app
 const PORT = process.env.PORT || 4000;
 
-app.get('/', (req,res) => {
-    res.send('Hola Mundo')
-})
+//Importar rutas
+app.use('/api/usuarios', require('./routes/usuarios'));
+app.use('/api/auth', require('./routes/auth'));
+
+// app.get('/', (req,res) => {
+//     res.send('Hola Mundo')
+// })
 // arrancar la app
 app.listen(PORT, () => {
     console.log(`El servidor esta funcionando en el puerto ${PORT}`);
