@@ -10,12 +10,13 @@ const {
 //api/proyectos
 router.post('/',
     auth,
-    // [
-    //     check('email', 'Agrega un email válido').isEmail(),
-    //     check('password', 'El password debe ser minimo de 6 caracteres').isLength({
-    //         min: 6
-    //     })
-    // ],
+    [
+        check('nombre', 'El nombre del proyecto es obligatoio').not().isEmpty()
+    ],
     proyectoController.crearProyecto);
+
+router.get('/',
+    auth,
+    proyectoController.obtenerProyectos);
 
 module.exports = router;

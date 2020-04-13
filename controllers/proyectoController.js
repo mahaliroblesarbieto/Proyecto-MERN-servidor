@@ -15,12 +15,25 @@ exports.crearProyecto = async (req, res) => {
         const proyecto = new Proyecto(req.body);
 
         // Guardar el creador via JWT
-        // proyecto.creador = req.usuario.id;
+        proyecto.creador = req.usuario.id;
 
         // guardamos el proyecto
         proyecto.save();
         res.json(proyecto);
         
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
+    }
+}
+
+// Obtiene todos los proyectos del usuario actual
+exports.obtenerProyectos = async (req, res) => {
+    try {
+        console.log(req.usuario);
+        
+        const proyectos = await Proyecto.find({ creador: req.usuario.id }).sort({ creado: -1 });
+        res.json({ proyectos });
     } catch (error) {
         console.log(error);
         res.status(500).send('Hubo un error');
